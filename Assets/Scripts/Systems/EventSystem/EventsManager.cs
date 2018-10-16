@@ -15,6 +15,11 @@ namespace CrazyBox.Systems
         }
 
         #region AddListener
+        public void AddListener<T>(string evtName, UnityAction evtAction)
+        {
+            AddListener(evtName, (Delegate)evtAction);
+        }
+
         public void AddListener<T>(string evtName, UnityAction<T> evtAction)
         {
             AddListener(evtName, (Delegate)evtAction);

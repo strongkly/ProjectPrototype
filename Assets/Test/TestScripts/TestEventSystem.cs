@@ -34,10 +34,41 @@ public class TestEventSystem : MonoBehaviour {
         {
             EventsManager.Instance.Dispatch(string.Format("evtIdx_{0}", evtIdx), evtIdx);
         }
+
+        if (GUILayout.Button("新增处理函数"))
+        {
+            EventsManager.Instance.AddListener<Arg>(string.Format("evtIdx_{0}", evtIdx), EvtClass);
+        }
+        if (GUILayout.Button("移除处理函数"))
+        {
+            EventsManager.Instance.RemoveListener<Arg>(string.Format("evtIdx_{0}", evtIdx), EvtClass);
+        }
+        if (GUILayout.Button("触发事件"))
+        {
+            EventsManager.Instance.Dispatch(string.Format("evtIdx_{0}", evtIdx), new Arg("Testing it all!"));
+        }
     }
 
     void EvtInt(int i = 0)
     {
         Debug.LogError("@@@");
+    }
+
+    void EvtClass(Arg arg)
+    {
+        Debug.LogError(arg.argName);
+    }
+}
+
+public class Arg
+{
+    public string argName
+    {
+        get; private set;
+    }
+
+    public Arg(string name)
+    {
+        argName = name;
     }
 }
