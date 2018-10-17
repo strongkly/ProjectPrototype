@@ -120,6 +120,11 @@ namespace CrazyBox.Systems
         #endregion
 
         #region RemoveListener
+        public void RemoveListener(string evtName, UnityAction evtAction)
+        {
+            RemoveListener(evtName, (Delegate)evtAction);
+        }
+
         public void RemoveListener<T>(string evtName, UnityAction<T> evtAction)
         {
             RemoveListener(evtName, (Delegate)evtAction);
