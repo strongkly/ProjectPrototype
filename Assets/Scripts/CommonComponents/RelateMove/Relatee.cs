@@ -5,13 +5,13 @@ using CrazyBox.Systems;
 
 public class Relatee : MonoBehaviour
 {
-    RectTransform rectTransform;
-
-	void Start ()
+    RectTransform rectTransform
     {
-        rectTransform = transform as RectTransform;
-        EventsManager.Instance.AddListener(Relator.evtChangeRelateePos, UpdatePos);
-	}
+        get
+        {
+            return transform as RectTransform;
+        }
+    }
 
     public void UpdatePos()
     {

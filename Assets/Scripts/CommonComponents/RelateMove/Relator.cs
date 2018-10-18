@@ -4,12 +4,16 @@ using CrazyBox.Systems;
 
 public class Relator : MonoBehaviour
 {
-    RectTransform rectTransform;
-    public const string evtChangeRelateePos = "evtChangeRelateePos";
+    RectTransform rectTransform
+    {
+        get
+        {
+            return transform as RectTransform;
+        }
+    }
 
     void Start ()
     {
-        rectTransform = transform as RectTransform;
         DragHandler.Get(gameObject).OnDragAction = OnDrag;
         DragHandler.Get(gameObject).OnDropAction = OnDrop;
     }
@@ -28,7 +32,5 @@ public class Relator : MonoBehaviour
         Vector3 pos = rectTransform.anchoredPosition;
         PlayerPrefs.SetFloat("relatedx", pos.x / rectTransform.sizeDelta.x);
         PlayerPrefs.SetFloat("relatedy", pos.y / rectTransform.sizeDelta.y);
-
-        EventsManager.Instance.Dispatch(evtChangeRelateePos);
     }
 }
