@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class RelativeFix : MonoBehaviour {
 
-    public const string evtFixPos = "evtFixPos";
-
     [SerializeField]
     public RectTransform relatee;
 
@@ -27,17 +25,6 @@ public class RelativeFix : MonoBehaviour {
     void Start()
     {
         selfRectrans = transform as RectTransform;
-        EventsManager.Instance.AddListener(evtFixPos, OnEvtFixPos);
-    }
-
-    private void OnDestroy()
-    {
-        EventsManager.Instance.RemoveListener(evtFixPos, OnEvtFixPos);
-    }
-
-    void OnEvtFixPos()
-    {
-        FixPos();
     }
 
     public Vector3 FixPos(RectTransform relatee = null)
@@ -75,7 +62,7 @@ public class RelativeFix : MonoBehaviour {
             result.y = wRRBPoint.y + (wLTPoint.y - wRBPoint.y) / 2;
 
         selfRectrans.anchoredPosition = transform.parent.InverseTransformPoint(result);
-        return transform.localPosition;
+        return result;
     }
 
 

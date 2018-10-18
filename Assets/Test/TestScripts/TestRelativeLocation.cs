@@ -2,7 +2,7 @@
 using CrazyBox.Systems;
 using UnityEngine.EventSystems;
 
-public class TestRelativeFix : MonoBehaviour {
+public class TestRelativeLocation : MonoBehaviour {
 
     void Start()
     {
@@ -22,7 +22,7 @@ public class TestRelativeFix : MonoBehaviour {
     {
         if (GUILayout.Button("调整位置"))
         {
-            GetComponent<RelativeFix>().FixPos();
+            GetComponent<RelativeLocation>().FixLocation();
         }    
     }
 }
