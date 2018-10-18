@@ -28,11 +28,6 @@ public class RelativeLocation : MonoBehaviour {
         }
     }
 
-    void Start()
-    {
-        selfRectrans = transform as RectTransform;
-    }
-
     public Vector3 FixLocation(RectTransform relatee = null)
     {
         this.relatee = relatee ?? this.relatee;
