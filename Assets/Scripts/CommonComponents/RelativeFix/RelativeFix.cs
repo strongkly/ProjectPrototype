@@ -6,7 +6,13 @@ public class RelativeFix : MonoBehaviour {
     [SerializeField]
     public RectTransform relatee;
 
-    RectTransform selfRectrans;
+    RectTransform selfRectrans
+    {
+        get
+        {
+            return transform as RectTransform;
+        }
+    }
     Vector2 selfSize
     {
         get
@@ -20,11 +26,6 @@ public class RelativeFix : MonoBehaviour {
         {
             return relatee.sizeDelta;
         }
-    }
-
-    void Start()
-    {
-        selfRectrans = transform as RectTransform;
     }
 
     public Vector3 FixPos(RectTransform relatee = null)

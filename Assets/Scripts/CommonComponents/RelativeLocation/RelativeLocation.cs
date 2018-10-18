@@ -6,7 +6,13 @@ public class RelativeLocation : MonoBehaviour {
     [SerializeField]
     public RectTransform relatee;
 
-    RectTransform selfRectrans;
+    RectTransform selfRectrans
+    {
+        get
+        {
+            return transform as RectTransform;
+        }
+    }
     Vector2 selfSize
     {
         get
