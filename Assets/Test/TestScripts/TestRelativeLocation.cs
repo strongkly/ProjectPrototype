@@ -20,9 +20,25 @@ public class TestRelativeLocation : MonoBehaviour {
 
     void OnGUI()
     {
-        if (GUILayout.Button("调整位置"))
+        if (GUILayout.Button("放在左边"))
         {
-            GetComponent<RelativeLocation>().FixLocation();
-        }    
+            GetComponent<RelativeLocation>().FixLocation(direction: RelativeLocationDirection.left);
+        }
+        if (GUILayout.Button("放在右边"))
+        {
+            GetComponent<RelativeLocation>().FixLocation(direction: RelativeLocationDirection.right);
+        }
+        if (GUILayout.Button("放在中间"))
+        {
+            GetComponent<RelativeLocation>().FixLocation(direction: RelativeLocationDirection.center);
+        }
+        if (GUILayout.Button("放在上边"))
+        {
+            GetComponent<RelativeLocation>().FixLocation(direction: RelativeLocationDirection.top);
+        }
+        if (GUILayout.Button("放在下边"))
+        {
+            GetComponent<RelativeLocation>().FixLocation(direction: RelativeLocationDirection.bottom);
+        }
     }
 }
