@@ -1,5 +1,13 @@
 ﻿using UnityEngine;
 
+/* 
+ * before attaching this script,be notice that the following conditions must be satisfied:
+ * 1. the anchor of re-locating recttransform need to be set to the left bottom corner of its parent recttransform
+ * 2. both pivots of re-locating and relative recttransform needs to be set to center, which is (0.5, 0.5)
+ * 3. the setting for both parents of re-locating and relative recttransform has to be the same, which means their 
+ * parent transforms are overlapping.
+ * 4. all these settings can be seen visually in TestRelativeLocation
+*/
 public enum RelativeLocationDirection
 {
     left,
@@ -41,7 +49,7 @@ public class RelativeLocation : MonoBehaviour {
     {
         this.relatee = relatee ?? this.relatee;
         Vector3 result = this.relatee.anchoredPosition;
-        result = GetRelateeSourcePos(direction); //this.relatee.anchoredPosition.x + relateeSize.x / 2;
+        result = GetRelateeSourcePos(direction);
         result = relateeParentTrans.TransformPoint(result);
 
         result = transform.parent.InverseTransformPoint(result);
@@ -164,14 +172,13 @@ public class RelativeLocation : MonoBehaviour {
     void AdjustRightPos(ref Vector3 localPos)
     {
         localPos.x = localPos.x - selfRectrans.anchorMin.x * 
-            GetParentWidth() + GetSelfWidth() / 2;
-        localPos.y = localPos.y - selfRectrans.anchorMin.y *
-            GetParentHeight();
+            GetRelateeParentWidth() + GetSelfWidth() / 2;
     }
 
     void AdjustLeftPos(ref Vector3 localPos)
     {
-        localPos.x = localPos.x - GetSelfWidth() / 2;
+        localPos.x = localPos.x + selfRectrans.anchorMin.x *
+            GetParentWidth() - GetSelfWidth() / 2;
     }
 
     void AdjustCenterPos(ref Vector3 localPos)
@@ -181,36 +188,34 @@ public class RelativeLocation : MonoBehaviour {
 
     void AdjustTopPos(ref Vector3 localPos)
     {
-        localPos.y = localPos.y + GetSelfHeight() / 2;
+        localPos.y = localPos.y - selfRectrans.anchorMin.y *
+            GetRelateeParentHeight() + GetSelfHeight() / 2;
     }
 
     void AdjustBottomPos(ref Vector3 localPos)
     {
-        localPos.y = localPos.y - GetSelfHeight() / 2;
+        localPos.y = localPos.y - selfRectrans.anchorMin.y *
+            GetRelateeParentWidth() - GetSelfHeight() / 2;
     }
 
     float GetRelateeParentWidth()
     {
         return relateeParentTrans.rect.width;
-        //return relateeParentTrans.sizeDelta.x;
     }
 
     float GetRelateeParentHeight()
     {
         return relateeParentTrans.rect.height;
-        //return relateeParentTrans.sizeDelta.x;
     }
 
     float GetRelateeWidth()
     {
         return relatee.rect.width;
-        //return relatee.sizeDelta.x;
     }
 
     float GetRelateeHeight()
     {
         return relatee.rect.height;
-        //return relatee.sizeDelta.x;
     }
 
     float GetParentWidth()
