@@ -18,8 +18,13 @@ public class TestRelativeLocation : MonoBehaviour {
         transform.localPosition = pos;
     }
 
+    string anchoredPos;
+
     void OnGUI()
     {
+        anchoredPos = (transform as RectTransform).anchoredPosition.ToString();
+        GUILayout.Label(anchoredPos);
+
         if (GUILayout.Button("放在左边"))
         {
             GetComponent<RelativeLocation>().FixLocation(direction: RelativeLocationDirection.left);
