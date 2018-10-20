@@ -1,263 +1,266 @@
 ﻿using UnityEngine;
 
-/* 
- * before attaching this script,be notice that the following conditions must be satisfied:
- * 1. both pivots of re-locating and relative recttransform needs to be set to center, which is (0.5, 0.5)
- * 2. the setting for both parents of re-locating and relative recttransform has to be the same, which means their 
+/*                                            notice
+ * the setting for both parents of re-locating and relative recttransform has to be the same, which means their 
  * parent transforms are overlapping.
- * 3. all these settings can be seen visually in TestRelativeLocation
 */
-public enum RelativeLocationDirection
+
+namespace CrazyBox.Components
 {
-    left,
-    right,
-    center,
-    top,
-    bottom
-}
-
-public class RelativeLocation : MonoBehaviour {
-
-    [SerializeField]
-    public RectTransform relatee;
-
-    RectTransform selfRectrans
+    public enum RelativeLocationDirection
     {
-        get
+        left,
+        right,
+        center,
+        top,
+        bottom
+    }
+
+    public class RelativeLocation : MonoBehaviour {
+
+        [SerializeField]
+        public RectTransform relatee;
+
+        RectTransform selfRectrans
         {
-            return transform as RectTransform;
+            get
+            {
+                return transform as RectTransform;
+            }
         }
-    }
-    RectTransform relateeParentTrans
-    {
-        get
+        RectTransform relateeParentTrans
         {
-            return relatee.parent as RectTransform;
+            get
+            {
+                return relatee.parent as RectTransform;
+            }
         }
-    }
-    RectTransform parentTrans
-    {
-        get
+        RectTransform parentTrans
         {
-            return transform.parent as RectTransform;
+            get
+            {
+                return transform.parent as RectTransform;
+            }
         }
-    }
 
-    public Vector3 FixLocation(RectTransform relatee = null,
-        RelativeLocationDirection direction = RelativeLocationDirection.right)
-    {
-        this.relatee = relatee ?? this.relatee;
-        Vector3 result = this.relatee.anchoredPosition;
-        result = GetRelateeSourcePos(direction);
-        result = relateeParentTrans.TransformPoint(result);
-
-        result = transform.parent.InverseTransformPoint(result);
-        AdjustRelatorPos(ref result, direction);
-        selfRectrans.anchoredPosition = result;
-        
-        return result;
-    }
-
-    Vector3 GetRelateeSourcePos(RelativeLocationDirection direction =
-        RelativeLocationDirection.right)
-    {
-        Vector3 result;
-        switch (direction)
+        public Vector3 FixLocation(RectTransform relatee = null,
+            RelativeLocationDirection direction = RelativeLocationDirection.right)
         {
-            case RelativeLocationDirection.left:
-                result = GetLeftPosInFreeAnchor();
-                break;
-            case RelativeLocationDirection.right:
-                result = GetRightPosInFreeAnchor();
-                break;
-            case RelativeLocationDirection.center:
-                result = GetCenterPosInFreeAnchor();
-                break;
-            case RelativeLocationDirection.top:
-                result = GetTopPosInFreeAnchor();
-                break;
-            case RelativeLocationDirection.bottom:
-                result = GetBottomPosInFreeAnchor();
-                break;
-            default:
-                result = Vector3.zero;
-                break;
-        }
-        return result;
-    }
+            this.relatee = relatee ?? this.relatee;
+            Vector3 result = this.relatee.anchoredPosition;
+            result = GetRelateeSourcePos(direction);
+            result = relateeParentTrans.TransformPoint(result);
 
-    void AdjustRelatorPos(ref Vector3 original, RelativeLocationDirection direction =
-        RelativeLocationDirection.right)
-    {
-        switch (direction)
+            result = transform.parent.InverseTransformPoint(result);
+            AdjustRelatorPos(ref result, direction);
+            selfRectrans.anchoredPosition = result;
+
+            return result;
+        }
+
+        Vector3 GetRelateeSourcePos(RelativeLocationDirection direction =
+            RelativeLocationDirection.right)
         {
-            case RelativeLocationDirection.left:
-                AdjustLeftPos(ref original);
-                break;
-            case RelativeLocationDirection.right:
-                AdjustRightPos(ref original);
-                break;
-            case RelativeLocationDirection.center:
-                AdjustCenterPos(ref original);
-                break;
-            case RelativeLocationDirection.top:
-                AdjustTopPos(ref original);
-                break;
-            case RelativeLocationDirection.bottom:
-                AdjustBottomPos(ref original);
-                break;
-            default:
-                break;
+            Vector3 result;
+            switch (direction)
+            {
+                case RelativeLocationDirection.left:
+                    result = GetLeftPosInFreeAnchor();
+                    break;
+                case RelativeLocationDirection.right:
+                    result = GetRightPosInFreeAnchor();
+                    break;
+                case RelativeLocationDirection.center:
+                    result = GetCenterPosInFreeAnchor();
+                    break;
+                case RelativeLocationDirection.top:
+                    result = GetTopPosInFreeAnchor();
+                    break;
+                case RelativeLocationDirection.bottom:
+                    result = GetBottomPosInFreeAnchor();
+                    break;
+                default:
+                    result = Vector3.zero;
+                    break;
+            }
+            return result;
         }
-    }
 
-    #region relatee pos 
-    Vector3 GetRightPosInFreeAnchor()
-    {
-        Vector3 result = Vector3.zero; 
-        result.x = relatee.anchorMin.x * GetRelateeParentWidth() +
-            relatee.offsetMin.x + GetRelateeWidth();
-        result.y = relatee.anchorMin.y * GetRelateeParentHeight() +
-            relatee.offsetMin.y + GetRelateeHeight() / 2;
+        void AdjustRelatorPos(ref Vector3 original, RelativeLocationDirection direction =
+            RelativeLocationDirection.right)
+        {
+            switch (direction)
+            {
+                case RelativeLocationDirection.left:
+                    AdjustLeftPos(ref original);
+                    break;
+                case RelativeLocationDirection.right:
+                    AdjustRightPos(ref original);
+                    break;
+                case RelativeLocationDirection.center:
+                    AdjustCenterPos(ref original);
+                    break;
+                case RelativeLocationDirection.top:
+                    AdjustTopPos(ref original);
+                    break;
+                case RelativeLocationDirection.bottom:
+                    AdjustBottomPos(ref original);
+                    break;
+                default:
+                    break;
+            }
+        }
 
-        return result;
-    }
+        #region relatee pos 
+        Vector3 GetRightPosInFreeAnchor()
+        {
+            Vector3 result = Vector3.zero;
+            result.x = relatee.anchorMin.x * GetRelateeParentWidth() +
+                relatee.offsetMin.x + GetRelateeWidth();
+            result.y = relatee.anchorMin.y * GetRelateeParentHeight() +
+                relatee.offsetMin.y + GetRelateeHeight() / 2;
 
-    Vector3 GetLeftPosInFreeAnchor()
-    {
-        Vector3 result = Vector3.zero;
-        result.x = relatee.anchorMin.x * GetRelateeParentWidth() +
-            relatee.offsetMin.x;
-        result.y = relatee.anchorMin.y * GetRelateeParentHeight() +
-            relatee.offsetMin.y + GetRelateeHeight() / 2;
+            return result;
+        }
 
-        return result;
-    }
+        Vector3 GetLeftPosInFreeAnchor()
+        {
+            Vector3 result = Vector3.zero;
+            result.x = relatee.anchorMin.x * GetRelateeParentWidth() +
+                relatee.offsetMin.x;
+            result.y = relatee.anchorMin.y * GetRelateeParentHeight() +
+                relatee.offsetMin.y + GetRelateeHeight() / 2;
 
-    Vector3 GetCenterPosInFreeAnchor()
-    {
-        Vector3 result = Vector3.zero;
-        result.x = relatee.anchorMin.x * GetRelateeParentWidth() +
-            relatee.offsetMin.x + GetRelateeWidth() / 2;
-        result.y = relatee.anchorMin.y * GetRelateeParentHeight() +
-            relatee.offsetMin.y + GetRelateeHeight() / 2;
+            return result;
+        }
 
-        return result;
-    }
+        Vector3 GetCenterPosInFreeAnchor()
+        {
+            Vector3 result = Vector3.zero;
+            result.x = relatee.anchorMin.x * GetRelateeParentWidth() +
+                relatee.offsetMin.x + GetRelateeWidth() / 2;
+            result.y = relatee.anchorMin.y * GetRelateeParentHeight() +
+                relatee.offsetMin.y + GetRelateeHeight() / 2;
 
-    Vector3 GetTopPosInFreeAnchor()
-    {
-        Vector3 result = Vector3.zero;
-        result.x = relatee.anchorMin.x * GetRelateeParentWidth() +
-            relatee.offsetMin.x + GetRelateeWidth() / 2;
-        result.y = relatee.anchorMin.y * GetRelateeParentHeight() +
-            relatee.offsetMin.y + GetRelateeHeight();
+            return result;
+        }
 
-        return result;
-    }
+        Vector3 GetTopPosInFreeAnchor()
+        {
+            Vector3 result = Vector3.zero;
+            result.x = relatee.anchorMin.x * GetRelateeParentWidth() +
+                relatee.offsetMin.x + GetRelateeWidth() / 2;
+            result.y = relatee.anchorMin.y * GetRelateeParentHeight() +
+                relatee.offsetMin.y + GetRelateeHeight();
 
-    Vector3 GetBottomPosInFreeAnchor()
-    {
-        Vector3 result = Vector3.zero;
-        result.x = relatee.anchorMin.x * GetRelateeParentWidth() +
-            relatee.offsetMin.x + GetRelateeWidth() / 2;
-        result.y = relatee.anchorMin.y * GetRelateeParentHeight() +
-            relatee.offsetMin.y;
+            return result;
+        }
 
-        return result;
-    }
-    #endregion
+        Vector3 GetBottomPosInFreeAnchor()
+        {
+            Vector3 result = Vector3.zero;
+            result.x = relatee.anchorMin.x * GetRelateeParentWidth() +
+                relatee.offsetMin.x + GetRelateeWidth() / 2;
+            result.y = relatee.anchorMin.y * GetRelateeParentHeight() +
+                relatee.offsetMin.y;
 
-    #region relocation pos
-    void AdjustRightPos(ref Vector3 localPos)
-    {
-        Vector2 anchorCenter = GetAnchorCenter(selfRectrans);
-        localPos.x = localPos.x - anchorCenter.x * 
-            GetParentWidth() + GetSelfWidth() / 2;
-        localPos.y = localPos.y - anchorCenter.y *
-            GetParentHeight();
-    }
+            return result;
+        }
+        #endregion
 
-    void AdjustLeftPos(ref Vector3 localPos)
-    {
-        Vector2 anchorCenter = GetAnchorCenter(selfRectrans);
-        localPos.x = localPos.x - anchorCenter.x *
-            GetParentWidth() - GetSelfWidth() / 2;
-        localPos.y = localPos.y - anchorCenter.y *
-            GetParentHeight();
-    }
+        #region relocation pos
+        void AdjustRightPos(ref Vector3 localPos)
+        {
+            Vector2 anchorCenter = GetAnchorCenter(selfRectrans);
+            localPos.x = localPos.x - anchorCenter.x *
+                GetParentWidth() + GetSelfWidth() / 2;
+            localPos.y = localPos.y - anchorCenter.y *
+                GetParentHeight();
+        }
 
-    void AdjustCenterPos(ref Vector3 localPos)
-    {
-        Vector2 anchorCenter = GetAnchorCenter(selfRectrans);
-        localPos.x = localPos.x - anchorCenter.x *
-            GetParentWidth();
-        localPos.y = localPos.y - anchorCenter.y *
-            GetParentHeight();
-    }
+        void AdjustLeftPos(ref Vector3 localPos)
+        {
+            Vector2 anchorCenter = GetAnchorCenter(selfRectrans);
+            localPos.x = localPos.x - anchorCenter.x *
+                GetParentWidth() - GetSelfWidth() / 2;
+            localPos.y = localPos.y - anchorCenter.y *
+                GetParentHeight();
+        }
 
-    void AdjustTopPos(ref Vector3 localPos)
-    {
-        Vector2 anchorCenter = GetAnchorCenter(selfRectrans);
-        localPos.x = localPos.x - anchorCenter.x *
-            GetParentWidth();
-        localPos.y = localPos.y - anchorCenter.y *
-            GetParentHeight() + GetSelfHeight() / 2;
-    }
+        void AdjustCenterPos(ref Vector3 localPos)
+        {
+            Vector2 anchorCenter = GetAnchorCenter(selfRectrans);
+            localPos.x = localPos.x - anchorCenter.x *
+                GetParentWidth();
+            localPos.y = localPos.y - anchorCenter.y *
+                GetParentHeight();
+        }
 
-    void AdjustBottomPos(ref Vector3 localPos)
-    {
-        Vector2 anchorCenter = GetAnchorCenter(selfRectrans);
-        localPos.x = localPos.x - anchorCenter.x *
-            GetParentWidth();
-        localPos.y = localPos.y - anchorCenter.y *
-            GetParentHeight() - GetSelfHeight() / 2;
-    }
+        void AdjustTopPos(ref Vector3 localPos)
+        {
+            Vector2 anchorCenter = GetAnchorCenter(selfRectrans);
+            localPos.x = localPos.x - anchorCenter.x *
+                GetParentWidth();
+            localPos.y = localPos.y - anchorCenter.y *
+                GetParentHeight() + GetSelfHeight() / 2;
+        }
 
-    public Vector2 GetAnchorCenter(RectTransform rect)
-    {
-        return new Vector2((rect.anchorMin.x + rect.anchorMax.x) / 2,
-            (rect.anchorMin.y + rect.anchorMax.y) / 2);
-    }
-    #endregion
+        void AdjustBottomPos(ref Vector3 localPos)
+        {
+            Vector2 anchorCenter = GetAnchorCenter(selfRectrans);
+            localPos.x = localPos.x - anchorCenter.x *
+                GetParentWidth();
+            localPos.y = localPos.y - anchorCenter.y *
+                GetParentHeight() - GetSelfHeight() / 2;
+        }
 
-    float GetRelateeParentWidth()
-    {
-        return relateeParentTrans.rect.width;
-    }
+        public Vector2 GetAnchorCenter(RectTransform rect)
+        {
+            return new Vector2((rect.anchorMin.x + rect.anchorMax.x) / 2,
+                (rect.anchorMin.y + rect.anchorMax.y) / 2);
+        }
+        #endregion
 
-    float GetRelateeParentHeight()
-    {
-        return relateeParentTrans.rect.height;
-    }
+        #region Assist func
+        float GetRelateeParentWidth()
+        {
+            return relateeParentTrans.rect.width;
+        }
 
-    float GetRelateeWidth()
-    {
-        return relatee.rect.width;
-    }
+        float GetRelateeParentHeight()
+        {
+            return relateeParentTrans.rect.height;
+        }
 
-    float GetRelateeHeight()
-    {
-        return relatee.rect.height;
-    }
+        float GetRelateeWidth()
+        {
+            return relatee.rect.width;
+        }
 
-    float GetParentWidth()
-    {
-        return parentTrans.rect.width;
-    }
+        float GetRelateeHeight()
+        {
+            return relatee.rect.height;
+        }
 
-    float GetParentHeight()
-    {
-        return parentTrans.rect.height;
-    }
+        float GetParentWidth()
+        {
+            return parentTrans.rect.width;
+        }
 
-    float GetSelfWidth()
-    {
-        return selfRectrans.rect.width;
-    }
+        float GetParentHeight()
+        {
+            return parentTrans.rect.height;
+        }
 
-    float GetSelfHeight()
-    {
-        return selfRectrans.rect.height;
+        float GetSelfWidth()
+        {
+            return selfRectrans.rect.width;
+        }
+
+        float GetSelfHeight()
+        {
+            return selfRectrans.rect.height;
+        }
+        #endregion
     }
 }

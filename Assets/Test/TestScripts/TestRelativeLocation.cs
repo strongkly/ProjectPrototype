@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using CrazyBox.Systems;
+using CrazyBox.Components;
 using UnityEngine.EventSystems;
 
 public class TestRelativeLocation : MonoBehaviour {
