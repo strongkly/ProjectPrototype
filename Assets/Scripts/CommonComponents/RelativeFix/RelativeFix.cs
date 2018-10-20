@@ -35,22 +35,19 @@ public class RelativeFix : MonoBehaviour {
             wRBPoint = new Vector3();
         Vector3 wRLTPoint = new Vector3(),
             wRRBPoint = new Vector3();
-        wLTPoint.x = selfRectrans.anchoredPosition.x - selfSize.x / 2;
-        wLTPoint.y = selfRectrans.anchoredPosition.y + selfSize.y / 2;
-        wRBPoint.x = selfRectrans.anchoredPosition.x + selfSize.x / 2;
-        wRBPoint.y = selfRectrans.anchoredPosition.y - selfSize.y / 2;
-
+      
+        wLTPoint = selfRectrans.GetTopLeftPosInParentWithFreeAnchor();
+        wRBPoint = selfRectrans.GetLowRightPosInParentWithFreeAnchor();
         wLTPoint = transform.parent.TransformPoint(wLTPoint);
         wRBPoint = transform.parent.TransformPoint(wRBPoint);
 
-        wRLTPoint.x = this.relatee.anchoredPosition.x - relateeSize.x / 2;
-        wRLTPoint.y = this.relatee.anchoredPosition.y + relateeSize.y / 2;
-        wRRBPoint.x = this.relatee.anchoredPosition.x + relateeSize.x / 2;
-        wRRBPoint.y = this.relatee.anchoredPosition.y - relateeSize.y / 2;
-
+        wRLTPoint = this.relatee.GetTopLeftPosInParentWithFreeAnchor();
+        wRRBPoint = this.relatee.GetLowRightPosInParentWithFreeAnchor();
         wRLTPoint = this.relatee.parent.TransformPoint(wRLTPoint);
         wRRBPoint = this.relatee.parent.TransformPoint(wRRBPoint);
-        Vector3 result = transform.position;
+
+        Vector3 result = new Vector3((wRBPoint.x - wLTPoint.x) / 2,
+            (wLTPoint.y - wRBPoint.y) / 2, transform.position.z);
 
         if (wLTPoint.x < wRLTPoint.x) //左超框
             result.x = wRLTPoint.x + (wRBPoint.x - wLTPoint.x) / 2;
@@ -62,7 +59,10 @@ public class RelativeFix : MonoBehaviour {
         else if (wRBPoint.y < wRRBPoint.y) //下超框
             result.y = wRRBPoint.y + (wLTPoint.y - wRBPoint.y) / 2;
 
-        selfRectrans.anchoredPosition = transform.parent.InverseTransformPoint(result);
+        result = transform.parent.InverseTransformPoint(result);
+        //result = selfRectrans.AdjustPosInParentWithFreeAnchor(result);
+        selfRectrans.anchoredPosition = result;
+
         return result;
     }
 
