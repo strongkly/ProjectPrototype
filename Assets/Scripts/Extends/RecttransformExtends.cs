@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public static class RecttransformExtends
 {
@@ -64,6 +62,16 @@ public static class RecttransformExtends
         return localPos;
     }
 
+    public static Vector3 AdjustPosWithFreePivot(
+        this RectTransform rectTrans, Vector3 localPos)
+    {
+        localPos.x = localPos.x + (rectTrans.pivot.x - 0.5f)
+            * GetSelfWidth(rectTrans);
+        localPos.y = localPos.y + (rectTrans.pivot.y - 0.5f)
+            * GetSelfHeight(rectTrans);
+        return localPos;
+    }
+
     public static Vector2 GetAnchorCenter(this RectTransform rect)
     {
         return new Vector2((rect.anchorMin.x + rect.anchorMax.x) / 2,
@@ -88,5 +96,15 @@ public static class RecttransformExtends
             result = (rectTrans.parent as RectTransform).rect.height;
         }
         return result;
+    }
+
+    public static float GetSelfWidth(this RectTransform rectTrans)
+    {
+        return rectTrans.rect.width;
+    }
+
+    public static float GetSelfHeight(this RectTransform rectTrans)
+    {
+        return rectTrans.rect.height;
     }
 }

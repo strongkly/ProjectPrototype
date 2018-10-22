@@ -1,5 +1,11 @@
-﻿using CrazyBox.Systems;
-using UnityEngine;
+﻿using UnityEngine;
+
+/*                                            notice
+ * the setting for both parents of re-locating and relative recttransform has to be the same, which means their 
+ * parent transforms are overlapping.
+ *
+ * the pivot of relocating recttransform must be center, which is (0.5, 0.5)
+ */
 
 public class RelativeFix : MonoBehaviour {
 
@@ -46,8 +52,8 @@ public class RelativeFix : MonoBehaviour {
         wRLTPoint = this.relatee.parent.TransformPoint(wRLTPoint);
         wRRBPoint = this.relatee.parent.TransformPoint(wRRBPoint);
 
-        Vector3 result = new Vector3((wRBPoint.x - wLTPoint.x) / 2,
-            (wLTPoint.y - wRBPoint.y) / 2, transform.position.z);
+        Vector3 result = new Vector3((wLTPoint.x + wRBPoint.x) / 2,
+            (wLTPoint.y + wRBPoint.y) / 2, transform.position.z);
 
         if (wLTPoint.x < wRLTPoint.x) //左超框
             result.x = wRLTPoint.x + (wRBPoint.x - wLTPoint.x) / 2;
@@ -60,9 +66,10 @@ public class RelativeFix : MonoBehaviour {
             result.y = wRRBPoint.y + (wLTPoint.y - wRBPoint.y) / 2;
 
         result = transform.parent.InverseTransformPoint(result);
-        //result = selfRectrans.AdjustPosInParentWithFreeAnchor(result);
-        selfRectrans.anchoredPosition = result;
+        result = selfRectrans.AdjustPosInParentWithFreeAnchor(result);
+        //result = selfRectrans.AdjustPosWithFreePivot(result);
 
+        selfRectrans.anchoredPosition = result;
         return result;
     }
 
