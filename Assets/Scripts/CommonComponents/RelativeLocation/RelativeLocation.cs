@@ -53,6 +53,7 @@ namespace CrazyBox.Components
 
             result = transform.parent.InverseTransformPoint(result);
             AdjustRelatorPos(ref result, direction);
+            result = selfRectrans.AdjustPosWithFreePivot(result);
             selfRectrans.anchoredPosition = result;
 
             return result;
@@ -171,7 +172,7 @@ namespace CrazyBox.Components
         #region relocation pos
         void AdjustRightPos(ref Vector3 localPos)
         {
-            Vector2 anchorCenter = GetAnchorCenter(selfRectrans);
+            Vector2 anchorCenter = selfRectrans.GetRelativeAnchor(); //GetAnchorCenter(selfRectrans);
             localPos.x = localPos.x - anchorCenter.x *
                 GetParentWidth() + GetSelfWidth() / 2;
             localPos.y = localPos.y - anchorCenter.y *
@@ -180,7 +181,7 @@ namespace CrazyBox.Components
 
         void AdjustLeftPos(ref Vector3 localPos)
         {
-            Vector2 anchorCenter = GetAnchorCenter(selfRectrans);
+            Vector2 anchorCenter = selfRectrans.GetRelativeAnchor();//GetAnchorCenter(selfRectrans);
             localPos.x = localPos.x - anchorCenter.x *
                 GetParentWidth() - GetSelfWidth() / 2;
             localPos.y = localPos.y - anchorCenter.y *
@@ -189,16 +190,17 @@ namespace CrazyBox.Components
 
         void AdjustCenterPos(ref Vector3 localPos)
         {
-            Vector2 anchorCenter = GetAnchorCenter(selfRectrans);
-            localPos.x = localPos.x - anchorCenter.x *
-                GetParentWidth();
-            localPos.y = localPos.y - anchorCenter.y *
-                GetParentHeight();
+            //Vector2 anchorCenter = selfRectrans.GetRelativeAnchor();
+            //localPos.x = localPos.x - anchorCenter.x *
+            //    GetParentWidth();
+            //localPos.y = localPos.y - anchorCenter.y *
+            //    GetParentHeight();
+            localPos = selfRectrans.AdjustPosInParentWithFreeAnchor(localPos);
         }
 
         void AdjustTopPos(ref Vector3 localPos)
         {
-            Vector2 anchorCenter = GetAnchorCenter(selfRectrans);
+            Vector2 anchorCenter = selfRectrans.GetRelativeAnchor();
             localPos.x = localPos.x - anchorCenter.x *
                 GetParentWidth();
             localPos.y = localPos.y - anchorCenter.y *
@@ -207,17 +209,11 @@ namespace CrazyBox.Components
 
         void AdjustBottomPos(ref Vector3 localPos)
         {
-            Vector2 anchorCenter = GetAnchorCenter(selfRectrans);
+            Vector2 anchorCenter = selfRectrans.GetRelativeAnchor();
             localPos.x = localPos.x - anchorCenter.x *
                 GetParentWidth();
             localPos.y = localPos.y - anchorCenter.y *
                 GetParentHeight() - GetSelfHeight() / 2;
-        }
-
-        public Vector2 GetAnchorCenter(RectTransform rect)
-        {
-            return new Vector2((rect.anchorMin.x + rect.anchorMax.x) / 2,
-                (rect.anchorMin.y + rect.anchorMax.y) / 2);
         }
         #endregion
 

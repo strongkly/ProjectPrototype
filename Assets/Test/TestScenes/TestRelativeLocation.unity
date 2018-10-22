@@ -124,7 +124,7 @@ GameObject:
   - component: {fileID: 94750518}
   - component: {fileID: 94750517}
   m_Layer: 5
-  m_Name: Panel
+  m_Name: RelateeParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -193,7 +193,7 @@ GameObject:
   - component: {fileID: 105775103}
   - component: {fileID: 105775102}
   m_Layer: 5
-  m_Name: Panel
+  m_Name: Relatee
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -326,7 +326,7 @@ GameObject:
   - component: {fileID: 521265850}
   - component: {fileID: 521265851}
   m_Layer: 5
-  m_Name: Panel
+  m_Name: Relocating
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -346,10 +346,10 @@ RectTransform:
   m_Father: {fileID: 1766170583}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.3027364, y: 0}
-  m_AnchoredPosition: {x: 326.9, y: 107.8}
-  m_SizeDelta: {x: -1.6000061, y: 156.2}
+  m_AnchorMin: {x: 0.10744237, y: 0.14028502}
+  m_AnchorMax: {x: 0.22173955, y: 0.31948408}
+  m_AnchoredPosition: {x: 490, y: 92.5}
+  m_SizeDelta: {x: 240.4, y: 83.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &521265848
 MonoBehaviour:
@@ -715,7 +715,7 @@ GameObject:
   - component: {fileID: 1766170585}
   - component: {fileID: 1766170584}
   m_Layer: 5
-  m_Name: Panel (1)
+  m_Name: RelocatingParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
