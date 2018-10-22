@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using System;
+using CrazyBox.Components;
 
 public class TestRelativeFix : MonoBehaviour {
 

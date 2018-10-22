@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
-using CrazyBox.Systems;
-using UnityEngine.EventSystems;
+using CrazyBox.Components;
 
 public class TestRelativeMove : MonoBehaviour {
 
