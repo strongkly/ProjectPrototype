@@ -50,7 +50,7 @@ public static class RecttransformExtends
         return result;
     }
 
-    public static Vector3 AdjustPosInParentWithFreeAnchor(
+    public static Vector3 InversedTransformPointToAnchoredPoint(
         this RectTransform rectTrans, Vector3 localPos)
     {
         Vector2 anchorCenter = GetRelativeAnchor(rectTrans);
@@ -62,7 +62,7 @@ public static class RecttransformExtends
         return localPos;
     }
 
-    public static Vector3 AdjustPosWithFreePivot(
+    public static Vector3 AdjustAnchoredPosition(
         this RectTransform rectTrans, Vector3 localPos)
     {
         localPos.x = localPos.x + (rectTrans.pivot.x - 0.5f)
@@ -74,8 +74,6 @@ public static class RecttransformExtends
 
     public static Vector2 GetRelativeAnchor(this RectTransform rect)
     {
-        //return new Vector2((rect.anchorMin.x + rect.anchorMax.x) / 2,
-        //    (rect.anchorMin.y + rect.anchorMax.y) / 2);
         return new Vector2(rect.anchorMin.x + (rect.anchorMax.x
             - rect.anchorMin.x) * rect.pivot.x,
             rect.anchorMin.y + (rect.anchorMax.y - rect.anchorMin.y)

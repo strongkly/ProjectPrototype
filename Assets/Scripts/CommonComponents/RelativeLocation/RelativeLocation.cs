@@ -53,7 +53,7 @@ namespace CrazyBox.Components
 
             result = transform.parent.InverseTransformPoint(result);
             AdjustRelatorPos(ref result, direction);
-            result = selfRectrans.AdjustPosWithFreePivot(result);
+            result = selfRectrans.AdjustAnchoredPosition(result);
             selfRectrans.anchoredPosition = result;
 
             return result;
@@ -190,12 +190,7 @@ namespace CrazyBox.Components
 
         void AdjustCenterPos(ref Vector3 localPos)
         {
-            //Vector2 anchorCenter = selfRectrans.GetRelativeAnchor();
-            //localPos.x = localPos.x - anchorCenter.x *
-            //    GetParentWidth();
-            //localPos.y = localPos.y - anchorCenter.y *
-            //    GetParentHeight();
-            localPos = selfRectrans.AdjustPosInParentWithFreeAnchor(localPos);
+            localPos = selfRectrans.InversedTransformPointToAnchoredPoint(localPos);
         }
 
         void AdjustTopPos(ref Vector3 localPos)

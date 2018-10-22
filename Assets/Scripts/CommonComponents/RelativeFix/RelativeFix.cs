@@ -67,8 +67,8 @@ namespace CrazyBox.Components
                 result.y = wRRBPoint.y + (wLTPoint.y - wRBPoint.y) / 2;
 
             result = transform.parent.InverseTransformPoint(result);
-            result = selfRectrans.AdjustPosInParentWithFreeAnchor(result);
-            result = selfRectrans.AdjustPosWithFreePivot(result);
+            result = selfRectrans.InversedTransformPointToAnchoredPoint(result);
+            result = selfRectrans.AdjustAnchoredPosition(result);
 
             selfRectrans.anchoredPosition = result;
             return result;
