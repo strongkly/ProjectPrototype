@@ -53,7 +53,7 @@ public static class RecttransformExtends
     public static Vector3 AdjustPosInParentWithFreeAnchor(
         this RectTransform rectTrans, Vector3 localPos)
     {
-        Vector2 anchorCenter = GetAnchorCenter(rectTrans);
+        Vector2 anchorCenter = GetRelativeAnchor(rectTrans);
         localPos.x = localPos.x - anchorCenter.x *
             GetParentWidth(rectTrans);
         localPos.y = localPos.y - anchorCenter.y *
@@ -72,10 +72,14 @@ public static class RecttransformExtends
         return localPos;
     }
 
-    public static Vector2 GetAnchorCenter(this RectTransform rect)
+    public static Vector2 GetRelativeAnchor(this RectTransform rect)
     {
-        return new Vector2((rect.anchorMin.x + rect.anchorMax.x) / 2,
-            (rect.anchorMin.y + rect.anchorMax.y) / 2);
+        //return new Vector2((rect.anchorMin.x + rect.anchorMax.x) / 2,
+        //    (rect.anchorMin.y + rect.anchorMax.y) / 2);
+        return new Vector2(rect.anchorMin.x + (rect.anchorMax.x
+            - rect.anchorMin.x) * rect.pivot.x,
+            rect.anchorMin.y + (rect.anchorMax.y - rect.anchorMin.y)
+            * rect.pivot.y);
     }
 
     public static float GetParentWidth(this RectTransform rectTrans)

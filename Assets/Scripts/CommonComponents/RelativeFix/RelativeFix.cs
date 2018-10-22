@@ -3,8 +3,6 @@
 /*                                            notice
  * the setting for both parents of re-locating and relative recttransform has to be the same, which means their 
  * parent transforms are overlapping.
- *
- * the pivot of relocating recttransform must be center, which is (0.5, 0.5)
  */
 
 public class RelativeFix : MonoBehaviour {
@@ -67,7 +65,7 @@ public class RelativeFix : MonoBehaviour {
 
         result = transform.parent.InverseTransformPoint(result);
         result = selfRectrans.AdjustPosInParentWithFreeAnchor(result);
-        //result = selfRectrans.AdjustPosWithFreePivot(result);
+        result = selfRectrans.AdjustPosWithFreePivot(result);
 
         selfRectrans.anchoredPosition = result;
         return result;
