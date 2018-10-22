@@ -1,27 +1,27 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using CrazyBox.Systems;
+﻿using UnityEngine;
 
-public class Relatee : MonoBehaviour
+namespace CrazyBox.Components
 {
-    RectTransform rectTransform
+    public class Relatee : MonoBehaviour
     {
-        get
+        RectTransform rectTransform
         {
-            return transform as RectTransform;
+            get
+            {
+                return transform as RectTransform;
+            }
         }
-    }
 
-    public void UpdatePos()
-    {
-        Vector2 relatedPos;
-        relatedPos.x = PlayerPrefs.GetFloat("relatedx");
-        relatedPos.y = PlayerPrefs.GetFloat("relatedy");
+        public void UpdatePos()
+        {
+            Vector2 relatedPos;
+            relatedPos.x = PlayerPrefs.GetFloat("relatedx");
+            relatedPos.y = PlayerPrefs.GetFloat("relatedy");
 
-        relatedPos.x *= rectTransform.sizeDelta.x;
-        relatedPos.y *= rectTransform.sizeDelta.y;
+            relatedPos.x *= rectTransform.sizeDelta.x;
+            relatedPos.y *= rectTransform.sizeDelta.y;
 
-        rectTransform.anchoredPosition = relatedPos;
+            rectTransform.anchoredPosition = relatedPos;
+        }
     }
 }
