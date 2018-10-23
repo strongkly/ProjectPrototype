@@ -1,10 +1,5 @@
 ﻿using UnityEngine;
 
-/*                                            notice
- * the setting for both parents of re-locating and relative recttransform has to be the same, which means their 
- * parent transforms are overlapping.
-*/
-
 namespace CrazyBox.Components
 {
     public enum RelativeLocationDirection
@@ -43,6 +38,13 @@ namespace CrazyBox.Components
             }
         }
 
+        /// <summary>
+        /// Rely on parent width and height,be sure both parent of re-location an relatee RectTransform are 
+        /// set to the same size
+        /// </summary>
+        /// <param name="relatee"></param>
+        /// <param name="direction"></param>
+        /// <returns></returns>
         public Vector3 FixAnchoredPosition(RectTransform relatee = null,
             RelativeLocationDirection direction = RelativeLocationDirection.right)
         {
@@ -59,6 +61,12 @@ namespace CrazyBox.Components
             return result;
         }
 
+        /// <summary>
+        /// Be sure both pivots of re-location and relatee RectTransform are set to center, which is (0.5, 0.5)
+        /// </summary>
+        /// <param name="relatee"></param>
+        /// <param name="direction"></param>
+        /// <returns></returns>
         public Vector3 FixLocalPosition(RectTransform relatee = null,
             RelativeLocationDirection direction = RelativeLocationDirection.right)
         {

@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
 /*                                            notice
- * the setting for both parents of re-locating and relative recttransform has to be the same, which means their 
- * parent transforms are overlapping.
+ * the size for both parents of re-locating and relative RectTransform has to be the same, which means their 
+ * parent transforms could fully overlapping.
  */
 
 namespace CrazyBox.Components
