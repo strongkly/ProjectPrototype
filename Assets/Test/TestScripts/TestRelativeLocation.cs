@@ -27,23 +27,23 @@ public class TestRelativeLocation : MonoBehaviour {
 
         if (GUILayout.Button("放在左边"))
         {
-            GetComponent<RelativeLocation>().FixLocation(direction: RelativeLocationDirection.left);
+            GetComponent<RelativeLocation>().FixLocalPosition(direction: RelativeLocationDirection.left);
         }
         if (GUILayout.Button("放在右边"))
         {
-            GetComponent<RelativeLocation>().FixLocation(direction: RelativeLocationDirection.right);
+            GetComponent<RelativeLocation>().FixLocalPosition(direction: RelativeLocationDirection.right);
         }
         if (GUILayout.Button("放在中间"))
         {
-            GetComponent<RelativeLocation>().FixLocation(direction: RelativeLocationDirection.center);
+            GetComponent<RelativeLocation>().FixLocalPosition(direction: RelativeLocationDirection.center);
         }
         if (GUILayout.Button("放在上边"))
         {
-            GetComponent<RelativeLocation>().FixLocation(direction: RelativeLocationDirection.top);
+            GetComponent<RelativeLocation>().FixLocalPosition(direction: RelativeLocationDirection.top);
         }
         if (GUILayout.Button("放在下边"))
         {
-            GetComponent<RelativeLocation>().FixLocation(direction: RelativeLocationDirection.bottom);
+            GetComponent<RelativeLocation>().FixLocalPosition(direction: RelativeLocationDirection.bottom);
         }
     }
 }
