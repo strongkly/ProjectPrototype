@@ -19,19 +19,12 @@ public class TestRelativeFix : MonoBehaviour {
         transform.localPosition = pos;
     }
 
-    float x = 0;
-
     void OnGUI()
     {
         GUILayout.Label((transform as RectTransform).anchoredPosition.ToString());
         if (GUILayout.Button("调整位置"))
         {
             GetComponent<RelativeFix>().FixPos();
-        }
-        x = Convert.ToInt32(GUILayout.TextField(x.ToString()));
-        if (GUILayout.Button("设置x 值"))
-        {
-            (transform as RectTransform).anchoredPosition = new Vector2(x, 0);
         }
     }
 }

@@ -39,7 +39,7 @@ namespace CrazyBox.Components
         }
 
         /// <summary>
-        /// Rely on parent width and height,be sure both parent of re-location an relatee RectTransform are 
+        /// Rely on parent width and height,be sure both parent of re-location and relatee RectTransform are 
         /// set to the same size
         /// </summary>
         /// <param name="relatee"></param>
@@ -62,7 +62,7 @@ namespace CrazyBox.Components
         }
 
         /// <summary>
-        /// Be sure both pivots of re-location and relatee RectTransform are set to center, which is (0.5, 0.5)
+        /// Be sure both pivots of re-location and relatee RectTransform are set to the same value
         /// </summary>
         /// <param name="relatee"></param>
         /// <param name="direction"></param>
@@ -258,7 +258,7 @@ namespace CrazyBox.Components
 
         void AdjustLeftPos(ref Vector3 localPos)
         {
-            Vector2 anchorCenter = selfRectrans.GetRelativeAnchor();//GetAnchorCenter(selfRectrans);
+            Vector2 anchorCenter = selfRectrans.GetRelativeAnchor();
             localPos.x = localPos.x - anchorCenter.x *
                 GetParentWidth() - GetSelfWidth() / 2;
             localPos.y = localPos.y - anchorCenter.y *

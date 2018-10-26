@@ -38,39 +38,35 @@ namespace CrazyBox.Components
         public Vector3 FixPos(RectTransform relatee = null)
         {
             this.relatee = relatee ?? this.relatee;
-            Vector3 wLTPoint = new Vector3(),
-                wRBPoint = new Vector3();
-            Vector3 wRLTPoint = new Vector3(),
-                wRRBPoint = new Vector3();
 
-            wLTPoint = selfRectrans.GetTopLeftPosInParentWithFreeAnchor();
-            wRBPoint = selfRectrans.GetLowRightPosInParentWithFreeAnchor();
-            wLTPoint = transform.parent.TransformPoint(wLTPoint);
-            wRBPoint = transform.parent.TransformPoint(wRBPoint);
+            Vector3 wLBPoint = selfRectrans.GetBottomLeftLocalPos();
+            Vector3 wRTPoint = selfRectrans.GetTopRightLocalPos();
+            Vector3 wRLBPoint = this.relatee.GetBottomLeftLocalPos();
+            Vector3 wRRTPoint = this.relatee.GetTopRightLocalPos();
 
-            wRLTPoint = this.relatee.GetTopLeftPosInParentWithFreeAnchor();
-            wRRBPoint = this.relatee.GetLowRightPosInParentWithFreeAnchor();
-            wRLTPoint = this.relatee.parent.TransformPoint(wRLTPoint);
-            wRRBPoint = this.relatee.parent.TransformPoint(wRRBPoint);
 
-            Vector3 result = new Vector3((wLTPoint.x + wRBPoint.x) / 2,
-                (wLTPoint.y + wRBPoint.y) / 2, transform.position.z);
+            wLBPoint = selfRectrans.parent.TransformPoint(wLBPoint);
+            wRTPoint = selfRectrans.parent.TransformPoint(wRTPoint);
+            wRLBPoint = this.relatee.parent.TransformPoint(wRLBPoint);
+            wRRTPoint = this.relatee.parent.TransformPoint(wRRTPoint);
 
-            if (wLTPoint.x < wRLTPoint.x) //左超框
-                result.x = wRLTPoint.x + (wRBPoint.x - wLTPoint.x) / 2;
-            else if (wRBPoint.x > wRRBPoint.x) //右超框
-                result.x = wRRBPoint.x - (wRBPoint.x - wLTPoint.x) / 2;
+            Vector3 result = selfRectrans.parent.TransformPoint(
+                selfRectrans.LocalPosToCenterPos());
 
-            if (wLTPoint.y > wRLTPoint.y) //上超框
-                result.y = wRLTPoint.y - (wLTPoint.y - wRBPoint.y) / 2;
-            else if (wRBPoint.y < wRRBPoint.y) //下超框
-                result.y = wRRBPoint.y + (wLTPoint.y - wRBPoint.y) / 2;
+            if (wLBPoint.x < wRLBPoint.x) //左超框
+                result.x = wRLBPoint.x + (wRTPoint.x - wLBPoint.x) / 2;
+            else if (wRTPoint.x > wRRTPoint.x) //右超框
+                result.x = wRRTPoint.x - (wRTPoint.x - wLBPoint.x) / 2;
 
-            result = transform.parent.InverseTransformPoint(result);
-            result = selfRectrans.InversedTransformPointToAnchoredPoint(result);
-            result = selfRectrans.AdjustAnchoredPosition(result);
+            if (wRTPoint.y > wRRTPoint.y) //上超框
+                result.y = wRRTPoint.y - (wRTPoint.y - wLBPoint.y) / 2;
+            else if (wLBPoint.y < wRLBPoint.y) //下超框
+                result.y = wRLBPoint.y + (wRTPoint.y - wLBPoint.y) / 2;
 
-            selfRectrans.anchoredPosition = result;
+            result = selfRectrans.parent.InverseTransformPoint(result);
+            result = selfRectrans.CenterPosToLocalPos(result);
+
+            selfRectrans.localPosition = result;
             return result;
         }
     }
