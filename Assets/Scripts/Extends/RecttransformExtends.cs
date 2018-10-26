@@ -55,62 +55,6 @@ public static class RecttransformExtends
         return result;
     }
 
-    public static Vector3 InversedTransformPointToAnchoredPoint(
-        this RectTransform rectTrans, Vector3 localPos)
-    {
-        Vector2 anchorCenter = GetRelativeAnchor(rectTrans);
-        localPos.x = localPos.x - anchorCenter.x *
-            GetParentWidth(rectTrans);
-        localPos.y = localPos.y - anchorCenter.y *
-            GetParentHeight(rectTrans);
-
-        return localPos;
-    }
-
-    public static Vector3 AdjustAnchoredPosition(
-        this RectTransform rectTrans, Vector3 localPos)
-    {
-        localPos.x = localPos.x + (rectTrans.pivot.x - 0.5f)
-            * GetSelfWidth(rectTrans);
-        localPos.y = localPos.y + (rectTrans.pivot.y - 0.5f)
-            * GetSelfHeight(rectTrans);
-        return localPos;
-    }
-
-    public static Vector2 GetRelativeAnchor(this RectTransform rect)
-    {
-        return new Vector2(rect.anchorMin.x + (rect.anchorMax.x
-            - rect.anchorMin.x) * rect.pivot.x,
-            rect.anchorMin.y + (rect.anchorMax.y - rect.anchorMin.y)
-            * rect.pivot.y);
-    }
-
-    public static Vector2 GetReferenceAnchor(this RectTransform rect)
-    {
-        return new Vector2((rect.anchorMin.x + rect.anchorMax.x) / 2,
-            (rect.anchorMin.y + rect.anchorMax.y) / 2);
-    }
-
-    public static float GetParentWidth(this RectTransform rectTrans)
-    {
-        float result = 0f;
-        if (rectTrans != null)
-        {
-            result = (rectTrans.parent as RectTransform).rect.width;
-        }
-        return result;
-    }
-
-    public static float GetParentHeight(this RectTransform rectTrans)
-    {
-        float result = 0f;
-        if (rectTrans != null)
-        {
-            result = (rectTrans.parent as RectTransform).rect.height;
-        }
-        return result;
-    }
-
     public static float GetSelfWidth(this RectTransform rectTrans)
     {
         return rectTrans.rect.width;
