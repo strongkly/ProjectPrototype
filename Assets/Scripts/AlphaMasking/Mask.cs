@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
@@ -242,8 +241,8 @@ namespace CrazyBox.Tools
 							_maskedUnlitWorldCoordsShader = null;
 						}
 
-
-						if ((material.shader == _maskedSpriteWorldCoordsShader) ||
+                        #region core adjust code when moving transform
+                        if ((material.shader == _maskedSpriteWorldCoordsShader) ||
 							(material.shader == _maskedUnlitWorldCoordsShader))
 						{
 							material.DisableKeyword("_SCREEN_SPACE_UI");
@@ -298,11 +297,12 @@ namespace CrazyBox.Tools
 							{
 								if (!Application.isPlaying)
 								{
-									MeshFilter maskMeshFilter = GetComponent<MeshFilter>();
-									if (maskMeshFilter != null)
-									{
-										CreateAndAssignQuad(maskMeshFilter.sharedMesh);
-									}
+                                    //MeshFilter maskMeshFilter = GetComponent<MeshFilter>();
+                                    //if (maskMeshFilter != null)
+                                    //{
+                                    //	CreateAndAssignQuad(maskMeshFilter.sharedMesh);
+                                    //}
+                                    CreateMesh();
 								}
 							}
 							#endif
@@ -358,7 +358,8 @@ namespace CrazyBox.Tools
 							material.SetTextureScale("_AlphaTex", scale);
 							material.SetFloat("_MaskRotation", rotationAngle * Mathf.Deg2Rad);
 						}
-					}
+                        #endregion
+                    }
 				}
 			}
 		}
