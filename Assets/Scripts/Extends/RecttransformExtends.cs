@@ -24,6 +24,11 @@ public static class RecttransformExtends
         return pos;
     }
 
+    /// <summary>
+    /// change position from pivot related position to visual center related position
+    /// </summary>
+    /// <param name="localPos"></param>
+    /// <returns></returns>
     public static Vector3 LocalPosToCenterPos(
         this RectTransform rectTrans, Vector3? localPos = null)
     {
@@ -40,6 +45,11 @@ public static class RecttransformExtends
         return result;
     }
 
+    /// <summary>
+    /// Inverse to LocalPosToCenterPos, which change position from visual center related position to pivot related position
+    /// </summary>
+    /// <param name="centerPos"></param>
+    /// <returns></returns>
     public static Vector3 CenterPosToLocalPos(
         this RectTransform rectTrans, Vector3 centerPos)
     {
