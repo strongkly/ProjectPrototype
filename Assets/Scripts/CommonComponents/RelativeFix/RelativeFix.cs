@@ -9,7 +9,6 @@ namespace CrazyBox.Components
 {
     public class RelativeFix : MonoBehaviour
     {
-
         [SerializeField]
         public RectTransform relatee;
 
@@ -33,6 +32,15 @@ namespace CrazyBox.Components
             {
                 return relatee.sizeDelta;
             }
+        }
+
+        public static RelativeFix Get(Transform target)
+        {
+            RelativeFix result = target.GetComponent<RelativeFix>();
+            if (result == null)
+                result = target.gameObject.AddComponent<RelativeFix>();
+
+            return result;
         }
 
         public Vector3 FixPos(RectTransform relatee = null)

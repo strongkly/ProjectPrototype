@@ -39,6 +39,8 @@ GameObject:
   - component: {fileID: 224919395193485288}
   - component: {fileID: 222842758153047822}
   - component: {fileID: 114799724266672112}
+  - component: {fileID: 114384684353796814}
+  - component: {fileID: 114412059323457844}
   m_Layer: 5
   m_Name: Handle
   m_TagString: Untagged
@@ -54,8 +56,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 224773481322461798}
+  - component: {fileID: 114564466402096478}
   m_Layer: 5
-  m_Name: JoyStick
+  m_Name: CrossValueSetter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -258,6 +261,18 @@ MonoBehaviour:
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: "\u4E0B"
+--- !u!114 &114384684353796814
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1185696816144182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb433433211b471489c15b7e58d40ed4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  relatee: {fileID: 0}
 --- !u!114 &114409079434635840
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -272,6 +287,17 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
+--- !u!114 &114412059323457844
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1185696816144182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dc215d4397857345a6d56bf515d8462, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114505732904554296
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -286,6 +312,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
+--- !u!114 &114564466402096478
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1245464165530254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c379f891b7d03f46a9132117c2c3ca5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  handler: {fileID: 224919395193485288}
+  bound: {fileID: 224682640886047094}
 --- !u!114 &114598899733246240
 MonoBehaviour:
   m_ObjectHideFlags: 1
