@@ -3,7 +3,7 @@
 public static class TransformExtends
 {
     public static bool TryFindTransformFromDescendantsByName(this Transform parent, 
-        ref TransformExtends findTrans, string name)
+        ref Transform findTrans, string name)
     {
         bool result = false;
 
@@ -22,7 +22,7 @@ public static class TransformExtends
             {
                 for (int i = 0; i < parent.childCount; i++)
                 {
-                    if (TryFindTransformInChildByName(parent.GetChild(i), ref findTrans, name))
+                    if (TryFindTransformFromDescendantsByName(parent.GetChild(i), ref findTrans, name))
                     {
                         result = true;
                         break;
