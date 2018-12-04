@@ -277,6 +277,9 @@
     <Reference Include="UnityEngine.StandardEvents">
       <HintPath>Library\UnityAssemblies\UnityEngine.StandardEvents.dll</HintPath>
     </Reference>
+    <Reference Include="DOTween">
+      <HintPath>Assets\Scripts\ThirdParty\DOTween\DOTween.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="ProjectPrototype.csproj">
@@ -288,6 +291,8 @@
     <Compile Include="Assets\Scripts\AlphaMasking\Editor\MaskEditor.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Scripts\ThirdParty\DOTween\DOTween.XML" />
+    <None Include="Assets\Scripts\ThirdParty\DOTween\readme.txt" />
     <None Include="Assets\Test\Shaders\UIShaders\Sprites-Alpha-Mask-WorldCoords.shader" />
     <None Include="Assets\Test\Shaders\UIShaders\Unlit-Alpha-Mask-WorldCoords.shader" />
   </ItemGroup>
