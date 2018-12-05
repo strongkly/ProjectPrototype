@@ -12,10 +12,14 @@ namespace CrazyBox.Components
         public void FixPos(RectTransform circleRect = null, CircleFixType fixType = CircleFixType.FixByHeight,
             float? radius = null)
         {
+            transform.localPosition = GetFixedPos(circleRect, fixType, radius);
+        }
+
+        public Vector3 GetFixedPos(RectTransform circleRect = null, CircleFixType fixType = CircleFixType.FixByHeight,
+            float? radius = null)
+        {
             if (relatee == null)
                 SetRelateeRect(circleRect);
-            if (relatee == null)
-                return;
 
             Vector3 rPos = circleRect.InverseTransformPoint(transform.position);
             switch (fixType)
@@ -30,11 +34,10 @@ namespace CrazyBox.Components
                     rPos = FixPosByRadius(rPos, radius);
                     break;
             }
-            //rPos = relatee.LocalPosToCenterPos(rPos);
             rPos = circleRect.TransformPoint(rPos);
             rPos = transform.parent.InverseTransformPoint(rPos);
 
-            transform.localPosition = rPos;
+            return rPos;
         }
 
         Vector2 FixPosByHeight(Vector2 pos)
