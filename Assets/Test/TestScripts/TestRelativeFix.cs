@@ -24,7 +24,7 @@ public class TestRelativeFix : MonoBehaviour {
         GUILayout.Label((transform as RectTransform).anchoredPosition.ToString());
         if (GUILayout.Button("调整位置"))
         {
-            GetComponent<RelativeFix>().FixPos();
+            GetComponent<RelativeFix>().LimitFixPos();
         }
     }
 }

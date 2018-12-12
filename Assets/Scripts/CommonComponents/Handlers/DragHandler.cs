@@ -2,9 +2,10 @@
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
-public class DragHandler : MonoBehaviour, IDragHandler, IDropHandler, IBeginDragHandler
+public class DragHandler : MonoBehaviour, IDragHandler, IDropHandler, IBeginDragHandler, IEndDragHandler
 {
-    public UnityAction<PointerEventData> OnDragAction, OnDropAction, OnBeginAction;
+    public UnityAction<PointerEventData> OnDragAction, OnDropAction,
+        OnBeginAction, OnEndAction;
 
     public static DragHandler Get(GameObject go)
     {
@@ -30,5 +31,11 @@ public class DragHandler : MonoBehaviour, IDragHandler, IDropHandler, IBeginDrag
     {
         if (OnDropAction != null)
             OnDropAction(evtData);
+    }
+
+    public void OnEndDrag(PointerEventData evtData)
+    {
+        if (OnEndAction != null)
+            OnEndAction(evtData);
     }
 }

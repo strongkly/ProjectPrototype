@@ -49,7 +49,7 @@ namespace CrazyBox.Components
 
         void OnDrop(PointerEventData ped)
         {
-            fix.FixPos(bound);
+            fix.LimitFixPos(bound);
         }
     }
 }

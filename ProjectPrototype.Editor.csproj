@@ -293,8 +293,8 @@
   <ItemGroup>
     <None Include="Assets\Scripts\ThirdParty\DOTween\DOTween.XML" />
     <None Include="Assets\Scripts\ThirdParty\DOTween\readme.txt" />
-    <None Include="Assets\Test\Shaders\UIShaders\Sprites-Alpha-Mask-WorldCoords.shader" />
-    <None Include="Assets\Test\Shaders\UIShaders\Unlit-Alpha-Mask-WorldCoords.shader" />
+    <None Include="Assets\Shaders\UIShaders\Sprites-Alpha-Mask-WorldCoords.shader" />
+    <None Include="Assets\Shaders\UIShaders\Unlit-Alpha-Mask-WorldCoords.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
