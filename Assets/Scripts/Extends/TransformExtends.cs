@@ -33,4 +33,14 @@ public static class TransformExtends
 
         return result;
     }
+
+    public static T GetOrAdd<T>(this Transform transform)
+        where T : Component
+    {
+        T result = transform.GetComponent<T>();
+        if (result == null)
+            result = transform.gameObject.AddComponent<T>();
+
+        return result;
+    }
 }
