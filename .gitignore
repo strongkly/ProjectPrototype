@@ -5,4 +5,5 @@ ProjectPrototype.sln
 ProjectPrototype.Editor.csproj
 .suo
 .csproj
-
+.vs
+ProjectSettings
