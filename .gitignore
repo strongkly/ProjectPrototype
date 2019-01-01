@@ -1,9 +1,11 @@
 Library
 Temp
-ProjectPrototype.csproj
-ProjectPrototype.sln
-ProjectPrototype.Editor.csproj
-.suo
-.csproj
-.vs
 ProjectSettings
+*.sln
+*.suo
+*.csproj
+.*
+!.gitignore
+obj
+Logs
+*.userprefs
