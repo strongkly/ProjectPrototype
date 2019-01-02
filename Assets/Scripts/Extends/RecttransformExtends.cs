@@ -74,4 +74,21 @@ public static class RecttransformExtends
     {
         return rectTrans.rect.height;
     }
+
+    public static bool IsWorldPosInRect(this RectTransform rectTrans, Vector2 worldPos)
+    {
+        bool result = true;
+
+        Vector3[] rectPoints = new Vector3[4];
+        rectTrans.GetWorldCorners(rectPoints);
+
+        if (worldPos.x < rectPoints[0].x ||
+            worldPos.x > rectPoints[2].x)
+            result = false;
+        else if (worldPos.y < rectPoints[0].y || 
+            worldPos.y > rectPoints[2].y)
+            result = false;
+
+        return result;
+    }
 }
