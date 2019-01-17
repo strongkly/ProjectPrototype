@@ -16,6 +16,10 @@ public static class CameraExtends
         return result;
     }
 
+    /// <summary>
+    /// equals to <see cref="RectTransformUtility.ScreenPointToWorldPointInRectangle"/>
+    /// </summary>
+    /// ScreenPointToRay:cam.ScreenPointToRay explaination:http://www.cs.princeton.edu/courses/archive/fall00/cs426/lectures/raycast/sld008.htm
     public static Vector3 ScreenToWorldPointWithRay(
         this Camera camera, Vector2 screenPos, RectTransform rect)
     {
