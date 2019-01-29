@@ -6,8 +6,10 @@ namespace CrazyBox.Components
 {
     public class DragHandler : MonoBehaviour, IDragHandler, IDropHandler, IBeginDragHandler, IEndDragHandler
     {
-        public UnityAction<PointerEventData> OnDragAction, OnDropAction,
-            OnBeginAction, OnEndAction;
+        public DragHandlerEvent<PointerEventData> OnDragAction = new DragHandlerEvent<PointerEventData>();
+        public DragHandlerEvent<PointerEventData> OnDropAction = new DragHandlerEvent<PointerEventData>();
+        public DragHandlerEvent<PointerEventData> OnBeginAction = new DragHandlerEvent<PointerEventData>();
+        public DragHandlerEvent<PointerEventData> OnEndAction = new DragHandlerEvent<PointerEventData>();
 
         public static DragHandler Get(GameObject go)
         {
@@ -32,13 +34,21 @@ namespace CrazyBox.Components
         public void OnDrop(PointerEventData evtData)
         {
             if (OnDropAction != null)
-                OnDropAction(evtData);
+                OnDropAction.Invoke(evtData);
         }
 
         public void OnEndDrag(PointerEventData evtData)
         {
             if (OnEndAction != null)
-                OnEndAction(evtData);
+                OnEndAction.Invoke(evtData);
+        }
+    }
+
+    public class DragHandlerEvent<PED> : UnityEvent<PointerEventData>
+    {
+        public DragHandlerEvent() : base()
+        {
+
         }
     }
 }

@@ -6,7 +6,8 @@ namespace CrazyBox.Components
 {
     public class ClickHandler : MonoBehaviour, IPointerClickHandler
     {
-        public UnityAction<PointerEventData> OnClickAction;
+        public ClickHandlerEvent<PointerEventData> OnClickAction 
+            = new ClickHandlerEvent<PointerEventData>();
 
         public static ClickHandler Get(GameObject go)
         {
@@ -19,7 +20,15 @@ namespace CrazyBox.Components
         public void OnPointerClick(PointerEventData ped)
         {
             if (OnClickAction != null)
-                OnClickAction(ped);
+                OnClickAction.Invoke(ped);
+        }
+    }
+
+    public class ClickHandlerEvent<PED> : UnityEvent<PointerEventData>
+    {
+        public ClickHandlerEvent() : base()
+        {
+
         }
     }
 }

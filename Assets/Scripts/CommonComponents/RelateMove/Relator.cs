@@ -15,8 +15,8 @@ namespace CrazyBox.Components
 
         void Start()
         {
-            DragHandler.Get(gameObject).OnDragAction = OnDrag;
-            DragHandler.Get(gameObject).OnDropAction = OnDrop;
+            DragHandler.Get(gameObject).OnDragAction.AddListener(OnDrag);
+            DragHandler.Get(gameObject).OnDropAction.AddListener(OnDrop);
         }
 
         public void OnDrag(PointerEventData ped)

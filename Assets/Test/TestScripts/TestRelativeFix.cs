@@ -11,22 +11,22 @@ public class TestRelativeFix : MonoBehaviour {
 
     void Start()
     {
-        DragHandler.Get(relocatingObj).OnDragAction = OnDrag;
+        DragHandler.Get(relocatingObj).OnDragAction.AddListener(OnDrag);
 
         #region rejectfix
         fix = RelativeFix.Get(img.transform);
         DragHandler dh = DragHandler.Get(img.gameObject);
-        dh.OnEndAction = (ped) =>
+        dh.OnEndAction.AddListener((ped) =>
         {
             fix.RejectFixPos(img.transform.parent as RectTransform);
-        };
-        dh.OnDragAction = (ped) =>
+        });
+        dh.OnDragAction.AddListener((ped) =>
         {
             //mapContainer.transform.localPosition += ped.delta
             Vector2 pos = img.transform.localPosition;
             pos += ped.delta;
             img.transform.localPosition = pos;
-        };
+        });
         #endregion
     }
 

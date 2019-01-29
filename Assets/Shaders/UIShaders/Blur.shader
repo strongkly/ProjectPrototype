@@ -3,7 +3,7 @@
 	Properties
 	{
 		_MainTex("Texture", 2D) = "white" {}
-	_StencilComp("Stencil Comparison", Float) = 8
+		_StencilComp("Stencil Comparison", Float) = 8
 		_Stencil("Stencil ID", Float) = 0
 		_StencilOp("Stencil Operation", Float) = 0
 		_StencilWriteMask("Stencil Write Mask", Float) = 255
@@ -14,11 +14,10 @@
 		_BlurSize("Blur Size", Float) = 2  //调整模糊强度
 	}
 
-		CGINCLUDE
+	CGINCLUDE
+	#include "UnityCG.cginc"
 
-#include "UnityCG.cginc"
-
-		sampler2D _MainTex;
+	sampler2D _MainTex;
 	uniform half4 _MainTex_TexelSize;
 	uniform float _BlurSize;
 
@@ -32,7 +31,7 @@
 		half4 uvoff[3]:TEXCOORD1;
 	};
 
-	v2f_blurSGX vert_BlurHorizontal(appdata_img v)
+	/*v2f_blurSGX vert_BlurHorizontal(appdata_img v)
 	{
 		v2f_blurSGX o;
 		o.pos = UnityObjectToClipPos(v.vertex);
@@ -43,15 +42,29 @@
 		o.uvoff[2] = v.texcoord.xyxy + offs.xyxy*coordOffset;
 
 		return o;
-	}
+	}*/
 
-	v2f_blurSGX vert_BlurVertical(appdata_img v)
+	/*v2f_blurSGX vert_BlurVertical(appdata_img v)
 	{
 		v2f_blurSGX o;
 		o.pos = UnityObjectToClipPos(v.vertex);
 		o.uv = v.texcoord.xy;
 
-		half2 offs = _MainTex_TexelSize.xy*half2(0, 1)*_BlurSize;
+		half2 offs = _MainTex_TexelSize.xy*half2(1, 0)*_BlurSize;
+		o.uvoff[0] = v.texcoord.xyxy + offs.xyxy*coordOffset * 3;
+		o.uvoff[1] = v.texcoord.xyxy + offs.xyxy*coordOffset * 2;
+		o.uvoff[2] = v.texcoord.xyxy + offs.xyxy*coordOffset;
+
+		return o;
+	}*/
+
+	v2f_blurSGX vert_BlurBoth(appdata_img v)
+	{
+		v2f_blurSGX o;
+		o.pos = UnityObjectToClipPos(v.vertex);
+		o.uv = v.texcoord.xy;
+
+		half2 offs = _MainTex_TexelSize.xy*half2(1, 1)*_BlurSize;
 		o.uvoff[0] = v.texcoord.xyxy + offs.xyxy*coordOffset * 3;
 		o.uvoff[1] = v.texcoord.xyxy + offs.xyxy*coordOffset * 2;
 		o.uvoff[2] = v.texcoord.xyxy + offs.xyxy*coordOffset;
@@ -63,22 +76,23 @@
 	{
 
 		fixed4 c = tex2D(_MainTex,i.uv)*weight[3];
-	for (int idx = 0; idx < 3; idx++)
-	{
-		c += tex2D(_MainTex,i.uvoff[idx].xy)*weight[idx];
-		c += tex2D(_MainTex,i.uvoff[idx].zw)*weight[idx];
+		for (int idx = 0; idx < 3; idx++)
+		{
+			c += tex2D(_MainTex,i.uvoff[idx].xy)*weight[idx];
+			c += tex2D(_MainTex,i.uvoff[idx].zw)*weight[idx];
+		}
+
+		return c;
 	}
 
-	return c;
-	}
+	ENDCG
 
-		ENDCG
-
-		SubShader
+	SubShader
 	{
 		// No culling or depth
-		Cull Off ZWrite Off
-			Stencil
+		Cull Off 
+		ZWrite Off
+		Stencil
 		{
 			Ref[_Stencil]
 			Comp[_StencilComp]
@@ -86,29 +100,34 @@
 			ReadMask[_StencilReadMask]
 			WriteMask[_StencilWriteMask]
 		}
-			Fog{ Mode Off }
-			Blend SrcAlpha OneMinusSrcAlpha
-			ColorMask[_ColorMask]
+		Fog{ Mode Off }
+		Blend SrcAlpha OneMinusSrcAlpha
+		ColorMask[_ColorMask]
 
-			Pass
+		/*Pass
 		{
 			ZTest Always
 			CGPROGRAM
-#pragma vertex vert_BlurHorizontal
-#pragma fragment frag_Blur
-
-
+			#pragma vertex vert_BlurHorizontal
+			#pragma fragment frag_Blur
 			ENDCG
-		}
+		}*/
 
-			Pass
+		/*Pass
 		{
 			ZTest Always
 			CGPROGRAM
-#pragma vertex vert_BlurVertical
-#pragma fragment frag_Blur
+			#pragma vertex vert_BlurVertical
+			#pragma fragment frag_Blur
+			ENDCG
+		}*/
 
-
+		Pass
+		{
+			ZTest Always
+			CGPROGRAM
+			#pragma vertex vert_BlurBoth
+			#pragma fragment frag_Blur
 			ENDCG
 		}
 	}

@@ -1,39 +1,42 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
+using System.Collections;
 
-public class CaptureCameraShot : MonoBehaviour
+namespace CrazyBox.Components.Functional
 {
-    Camera sourceCamera;
-
-    private void OnEnable()
+    [RequireComponent(typeof(Camera))]
+    public class CaptureCameraShot : MonoBehaviour
     {
-        sourceCamera = GetComponent<Camera>(); 
-    }
+        Camera sourceCamera;
 
-    public void CaptureScreenShot(UnityAction<Texture2D> callBack)
-    {
-        if (sourceCamera != null)
+        private void OnEnable()
         {
-            StartCoroutine(ScreenShoot(callBack));
+            sourceCamera = GetComponent<Camera>();
         }
-    }
 
-    IEnumerator ScreenShoot(UnityAction<Texture2D> callBack)
-    {
-        yield return new WaitForEndOfFrame();
-        RenderTexture rt = new RenderTexture(Screen.width, Screen.height, 24);
-        sourceCamera.targetTexture = rt;
-        sourceCamera.Render();
-        RenderTexture.active = rt;
+        public void CaptureScreenShot(UnityAction<Texture2D> callBack)
+        {
+            if (sourceCamera != null)
+            {
+                StartCoroutine(ScreenShoot(callBack));
+            }
+        }
 
-        Texture2D result = new Texture2D(Screen.width, Screen.height, TextureFormat.ARGB32, false);
-        result.ReadPixels(new Rect(0, 0, Screen.width, Screen.height), 0, 0);
-        result.Apply();
-        callBack(result);
-        sourceCamera.targetTexture = null;
-        RenderTexture.active = null;
-        GameObject.Destroy(rt);
+        IEnumerator ScreenShoot(UnityAction<Texture2D> callBack)
+        {
+            yield return new WaitForEndOfFrame();
+            RenderTexture rt = new RenderTexture(Screen.width, Screen.height, 24);
+            sourceCamera.targetTexture = rt;
+            sourceCamera.Render();
+            RenderTexture.active = rt;
+
+            Texture2D result = new Texture2D(Screen.width, Screen.height, TextureFormat.ARGB32, false);
+            result.ReadPixels(new Rect(0, 0, Screen.width, Screen.height), 0, 0);
+            result.Apply();
+            callBack(result);
+            sourceCamera.targetTexture = null;
+            RenderTexture.active = null;
+            GameObject.Destroy(rt);
+        }
     }
 }

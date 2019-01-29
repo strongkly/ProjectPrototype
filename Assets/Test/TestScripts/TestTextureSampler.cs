@@ -11,7 +11,7 @@ public class TestTextureSampler : MonoBehaviour
     void Start()
     {
         Texture2D t2d = Resources.Load<Texture2D>("TestClickMask");
-        ClickHandler.Get(this.gameObject).OnClickAction = CheckIsBlocked;
+        ClickHandler.Get(this.gameObject).OnClickAction.AddListener(CheckIsBlocked);
         tms = transform.GetOrAdd<TextureMaskSampler>();
         tms.Init();
     }

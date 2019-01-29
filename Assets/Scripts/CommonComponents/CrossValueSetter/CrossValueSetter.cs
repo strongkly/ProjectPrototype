@@ -29,8 +29,8 @@ namespace CrazyBox.Components
                 bound = transform.GetChild(0) as RectTransform;
 
             fix = RelativeFix.Get(handler);
-            DragHandler.Get(handler.gameObject).OnDragAction = OnDrag;
-            DragHandler.Get(handler.gameObject).OnDropAction = OnDrop;
+            DragHandler.Get(handler.gameObject).OnDragAction.AddListener(OnDrag);
+            DragHandler.Get(handler.gameObject).OnDropAction.AddListener(OnDrop);
             value = Vector2.zero;
         }
 

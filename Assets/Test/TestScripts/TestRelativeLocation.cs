@@ -6,7 +6,7 @@ public class TestRelativeLocation : MonoBehaviour {
 
     void Start()
     {
-        DragHandler.Get(gameObject).OnDragAction = OnDrag;
+        DragHandler.Get(gameObject).OnDragAction.AddListener(OnDrag);
     }
 
     public void OnDrag(PointerEventData ped)
