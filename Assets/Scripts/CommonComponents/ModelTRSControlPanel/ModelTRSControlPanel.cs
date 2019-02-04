@@ -13,7 +13,7 @@ namespace CrazyBox.Components.Functional
         Camera zoomCamera;
 
         [SerializeField]
-        string pivotTransName;
+        Transform pivotTrans;
 
         [SerializeField]
         bool IsPivotRotate;
@@ -64,11 +64,8 @@ namespace CrazyBox.Components.Functional
         {
             if (IsPivotRotate)
             {
-                Transform pivotTrans = null;
-                if (Target.TryFindTransformFromDescendantsByName(ref pivotTrans, pivotTransName))
-                {
+                if (pivotTrans != null)
                     Pivot = pivotTrans.position;
-                }
             }
         }
         #endregion
@@ -89,10 +86,10 @@ namespace CrazyBox.Components.Functional
             this.zoomStrength = Mathf.Clamp01(strength);
         }
 
-        public void SetPivotRotate(string pivotTrans, bool pivotRotate = true)
+        public void SetPivotRotate(Transform pivotTrans, bool pivotRotate = true)
         {
             this.IsPivotRotate = pivotRotate;
-            pivotTransName = pivotTrans;
+            this.pivotTrans = pivotTrans;
         }
 
         public void SetZoomBoundary(Vector3 boundaryInPos, Vector3 boundaryOutPos)
