@@ -8,7 +8,7 @@ public class TestCrossValueSetter : MonoBehaviour
     void Start()
     {
         cvs = transform.GetChild(0).GetComponent<CrossValueSetter>();
-        cvs.onValueChange = OnValueChange;
+        cvs.onValueChange.AddListener(OnValueChange);
     }
 
     void OnValueChange(Vector2 value)
