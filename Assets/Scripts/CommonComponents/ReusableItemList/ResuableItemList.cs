@@ -7,7 +7,7 @@ namespace CrazyBox.Components
         where TItemView : ReusableItem<TItemData>
     {
         Queue<TItemView> reusableItems;
-        GameObject templateObject;
+        protected GameObject templateObject;
         Transform parent;
 
         public ReusableItemList(Transform childrenRoot, GameObject templateObject = null)
@@ -95,7 +95,7 @@ namespace CrazyBox.Components
             return result;
         }
 
-        protected TItemView AddNewItem()
+        protected virtual TItemView AddNewItem()
         {
             TItemView result;
             GameObject obj = GameObject.Instantiate<GameObject>(templateObject, parent);
