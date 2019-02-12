@@ -60,6 +60,18 @@ namespace CrazyBox.Systems
                     if (OnZoomIn != null) OnZoomIn.Invoke(touchDelta);
                 }
             }
+            #if UNITY_EDITOR
+            else if (Input.GetAxis("Mouse ScrollWheel") < 0)
+            {
+                if (OnZoomOut != null)
+                    OnZoomOut.Invoke(Input.GetAxis("Mouse ScrollWheel"));
+            }
+            else if (Input.GetAxis("Mouse ScrollWheel") > 0)
+            {
+                if (OnZoomIn != null)
+                    OnZoomIn.Invoke(Input.GetAxis("Mouse ScrollWheel"));
+            }
+            #endif
             else if (Input.touchCount == 2 &&
                 (Input.GetTouch(0).phase == TouchPhase.Ended ||
                 Input.GetTouch(0).phase == TouchPhase.Canceled ||
