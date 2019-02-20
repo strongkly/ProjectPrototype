@@ -15,4 +15,18 @@ public static class AnimationExtends
             animation.Stop();
         }
     }
+
+    public static void RewindToFirstFrame(this Animation animation, string name)
+    {
+        if (animation.isPlaying)
+        {
+            animation.Rewind(name);
+        }
+        else
+        {
+            animation.Play(name);
+            animation.Sample(name);
+            animation.Stop(name);
+        }
+    }
 }
