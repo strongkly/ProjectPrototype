@@ -25,7 +25,7 @@ public static class AnimationExtends
         else
         {
             animation.Play(name);
-            animation.Sample(name);
+            animation.Sample();
             animation.Stop(name);
         }
     }
