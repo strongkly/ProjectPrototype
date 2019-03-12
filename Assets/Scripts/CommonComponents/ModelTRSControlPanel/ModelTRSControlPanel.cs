@@ -35,6 +35,8 @@ namespace CrazyBox.Components.Functional
         [SerializeField]
         Vector3 zoomBoundaryInPos, zoomBoundaryOutPos;
 
+        Quaternion zoomInRot = Quaternion.identity, zoomOutRot = Quaternion.identity;
+
         public Vector3 Pivot { get; private set; }
 
         public Camera ZoomCamera { get { return zoomCamera; } }
@@ -60,6 +62,7 @@ namespace CrazyBox.Components.Functional
                 ZoomWithBoundary(this.zoomBoundaryInPos, this.zoomBoundaryOutPos, ped.delta.y);
             }
         }
+
         void OnBeginDrag(PointerEventData ped)
         {
             if (IsPivotRotate)
@@ -98,6 +101,12 @@ namespace CrazyBox.Components.Functional
             zoomBoundaryInPos = boundaryInPos;
         }
 
+        public void SetZoomBoundaryQuaterion(Quaternion zoomInRot, Quaternion zoomOutRot)
+        {
+            this.zoomInRot = zoomInRot;
+            this.zoomOutRot = zoomOutRot;
+        }
+
         public void SetZoomCamera(Camera zoomCamera)
         {
             this.zoomCamera = zoomCamera;
@@ -130,6 +139,7 @@ namespace CrazyBox.Components.Functional
             if (ZoomCamera != null)
             {
                 Vector3 dir = outPos - inPos;
+                float len = dir.magnitude;
                 dir = dir.normalized;
                 dir *= (pixelDis / Screen.height * this.zoomStrength * dir.magnitude);
                 dir = ZoomCamera.transform.position + dir;
@@ -137,7 +147,9 @@ namespace CrazyBox.Components.Functional
                     Mathf.Clamp(dir.y, Mathf.Min(inPos.y, outPos.y), Mathf.Max(inPos.y, outPos.y)),
                     Mathf.Clamp(dir.z, Mathf.Min(inPos.z, outPos.z), Mathf.Max(inPos.z, outPos.z)));
 
-                ZoomCamera.transform.position = dir;             
+                ZoomCamera.transform.position = dir;
+                zoomCamera.transform.rotation =
+                    Quaternion.Lerp(zoomInRot, zoomOutRot, (dir - inPos).magnitude / len);
             }
         }
     }
